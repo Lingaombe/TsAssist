@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="icon" href="/static/assets/favicon.ico">
     <title>T'sAssist</title>
 </head>
 <body>
@@ -10,10 +12,23 @@
         <h1>T'sAssist</h1>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/signUp">Sign Up</a></li>
             <li><a href="/signin">Sign In</a></li>
         </ul>
-        <button onclick="toggleMode()">Toggle Mode</button>
+        <br>
+        <p id="toggleMode"><img id="mode" src="../static/assets/sun.png" /></p>
     </nav>
 </body>
+<script>
+    document.getElementById('toggleMode').addEventListener('click', toggleMode);
+    function toggleMode() {
+        document.body.classList.toggle('dark-mode');
+        let modeIcon = document.getElementById('mode');
+        if (document.body.classList.contains('dark-mode')){
+            modeIcon.src = '../static/assets/moon.png'
+        } else {
+            modeIcon.src = "../static/assets/sun.png";
+        }
+    }
+</script>
 </html>

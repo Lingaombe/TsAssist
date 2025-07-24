@@ -2,3 +2,55 @@ body{
     background-color: #FFF2F1;
     color: #1F2937;
 }
+.dark-mode {
+    background-color: #1F2937;
+    color: #FFFFFF;
+}
+.title{
+    color: #1F2937;
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+button{
+    background-color: #A09BE7 ;
+    font-weight: 500;
+    padding: 8px;
+    border-radius: 10px;
+    border: transparent;
+}
+button:hover{
+    background-color: #928afc;
+    cursor: pointer;
+}
+button:active{
+    transform: scale(0.9);
+    transition: transform 0.1s ease-in-out;
+}
+a{
+    color: #928afc;
+    text-decoration: none;
+}
+/* a:hover{
+    background-color: #A09BE7; underline that moves
+    color: #B0FF92;
+} */
+nav{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+nav ul{
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+nav img{
+    cursor: pointer;
+}
+nav img:active{
+    transform: rotate(360deg);
+    transition: transform 0.5s ease-in-out;
+}
