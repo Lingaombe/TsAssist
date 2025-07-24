@@ -86,7 +86,6 @@ cd PaperForge
 * Backend (Flask + MySQL)
 
 ```bash
-cd backend
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -94,10 +93,10 @@ pip install -r requirements.txt
 
 ### 3. Configure Environment
 
-Create a `.env` file in the `backend/` directory with necessary variables. Remember to `.gitignore` it.
+Create a `.env` file with necessary variables. Remember to `.gitignore` it.
 
 ```env
-# Example (backend/.env)
+# Example (.env)
 FLASK_APP=app.py
 FLASK_ENV=development
 MYSQL_HOST=localhost
@@ -110,7 +109,6 @@ JWT_SECRET=your-secret-key
 ### 4. Run the App
 
 ```bash
-cd backend
 flask run
 ```
 
