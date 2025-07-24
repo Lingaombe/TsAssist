@@ -1,6 +1,6 @@
-# 📄 PaperForge
+# 📄 T'sAssist
 
-**PaperForge** is a role-based web application that streamlines the creation and management of dynamic question papers. Designed for educational institutions, it allows teachers to upload questions, generate exams, and manage question banks; all while giving HoDs and examiners administrative control.
+**T'sAssist** is a role-based web application system that streamlines the creation and management of dynamic question papers. Designed for educational institutions, it allows teachers to upload questions, generate exams, and manage question banks; all while giving HoDs and examiners administrative control.
 
 ---
 
@@ -56,7 +56,7 @@
 ## 📂 Folder Structure (Suggested)
 
 ```
-PaperForge/
+T'sAssist/
 ├── app.py                  # Flask entry point
 ├── config.py               # App configuration
 ├── models/                 # SQLAlchemy models
@@ -67,9 +67,9 @@ PaperForge/
 │   ├── css/
 │   └── js/
 ├── utils/                  # Helper functions, file parsers, etc.
-├── requirements.txt        # Python dependencies
+├── requirements.txt        # Python dependencies pip freeze>requirements.txt
 ├── README.md
-└── .env                    # Environment configuration (not committed)
+└── .env                    # Environment configuration (.gitignore this)
 ```
 ---
 
@@ -77,8 +77,8 @@ PaperForge/
 
 ### 1. Clone the Repo
 ```bash
-git clone https://github.com/Lingaombe/PaperForge.git
-cd PaperForge
+git clone https://github.com/Lingaombe/TsAssist.git
+cd TsAssist
 ````
 
 ### 2. Install Dependencies
