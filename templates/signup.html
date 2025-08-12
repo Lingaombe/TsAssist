@@ -14,11 +14,11 @@
             <h2 class="title">
                 T'sAssist
             </h2>
-            <p>Sign up to use online teacher assistant</p>
+            <p>Sign up to use online Teacher's Assistant</p>
             <button>Sign Up with google</button>
             <br>
             <p id="or">OR</p>
-            <form action="{{ url_for('signup')}}" method="post">
+            <form action="{{ url_for('signupData')}}" method="post">
                 <!-- <input type="hidden" name="csrf_token" value="{{ csrf_token }}"> -->
                 <input type="text" id="fullname" name="fullname" placeholder="Full Name" required>
                 <br>
@@ -38,20 +38,14 @@
 </body>
 <script>
     document.getElementById('password').addEventListener('input', function() {
-        const password = document.getElementById('password').value;
-        const errorMessage = document.getElementById('error_message');
+    const password = document.getElementById('password').value;
+    const errorMessage = document.getElementById('error_message');
 
-        if ( password.length < 8) {
-            errorMessage.textContent = "Ikani zolemba zosachepera zisanu ndi ziwiri";
-        } else if (!/[A-Z]/.test(password)) {
-            errorMessage.textContent = "Ikaniko chilemba chachikulu";
-        } else if (!/[0-9]/.test(password)) {
-            errorMessage.textContent = "Ikaniko nambala";
-        } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-            errorMessage.textContent = "Ikaniko chizindikiro chapadera ngati %^$#";
-        } else {
-            errorMessage.textContent = "";
-        }
+    if ( password.length < 8 || !/[A-Z]/.test(password) || !/[0-9]/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        errorMessage.textContent = "Password must contain at least 8 characters, uppercase letter, a number and a special character";
+    } else {
+        errorMessage.textContent = "";
+    }
     });
 
     document.getElementById('confirm_password').addEventListener('input', function() {
@@ -60,7 +54,7 @@
         const errorMessage = document.getElementById('error_message');
 
         if (password !== confirmPassword) {
-            errorMessage.textContent = "Mapasiwediwo afanane";
+            errorMessage.textContent = "Passwords need to match";
         } else {
             errorMessage.textContent = "";
         }

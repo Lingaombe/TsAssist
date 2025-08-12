@@ -5,12 +5,16 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
-@app.route("/signUp", methods=["GET"])
-def signUp():
+@app.route("/signup", methods=["GET"])
+def signup():
     return render_template("signup.html")
 
-@app.route('/signup', methods=['POST'])
-def signup():
+@app.route("/signin", methods=["GET"])
+def signin():
+    return render_template("signin.html")
+
+@app.route('/signupData', methods=['POST'])
+def signupData():
 
     # Get the form data as Python ImmutableDict datatype 
     data = request.form
