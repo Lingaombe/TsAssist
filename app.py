@@ -27,6 +27,10 @@ def signupData():
         'confirmPassword': data['confirm_password']
     }
 
+@app.route("/PaperGen", methods=['GET'])
+def paperGen():
+    return render_template("paperGen.html")
+
 @app.errorhandler(404)
 def page_not_found(error):
     # Return a custom 404 error page
