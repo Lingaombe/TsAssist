@@ -8,6 +8,10 @@
     <title>T'sAssist</title>
 </head>
 <body>
+    <!--
+        Enter paper name, marks and distribution
+        get course code from table
+    -->
     <nav>
         <h1>T'sAssist</h1>
         <div class="buttons">
@@ -22,7 +26,10 @@
     <main>
         <section class="paper">
             <input type="file" required placeholder="submit questions"/>
-            <input type="text" required placeholder="name of paper"
+            <input type="text" required placeholder="name of paper" /> 
+            <input type="number" required placeholder="total marks" />
+            <input type="text" required placeholder="paper requirements/ marks distribution ie 2mcq ..." />
+            <button onclick="paperGen()">Generate paper<button/>
         </section>
     </main>
 </body>
