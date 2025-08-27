@@ -1,0 +1,13 @@
+body{
+    text-align: center;
+}
+.hero{
+    background-image: ;
+    height: 200px;
+}
+.features li{
+    list-style-type: none;
+    display: inline-block;
+    padding-inline: 20px;
+    align-items: center;
+}
