@@ -12,12 +12,9 @@
     <div class="outer_form">
         <div class="form">
             <h2 class="title">
-                T'sAssist
+                TsAssist
             </h2>
             <p>Sign up to use online Teacher's Assistant</p>
-            <button>Sign Up with google</button>
-            <br>
-            <p id="or">OR</p>
             <form action="{{ url_for('signupData')}}" method="post">
                 <!-- <input type="hidden" name="csrf_token" value="{{ csrf_token }}"> -->
                 <input type="text" id="fullname" name="fullname" placeholder="Full Name" required>
