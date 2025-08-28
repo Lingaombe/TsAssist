@@ -6,18 +6,17 @@
     <link rel="stylesheet" href="/static/css/sign.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <link rel="icon" href="/static/assets/favicon.ico">
-    <title>SignIn</title>
+    <title>TsAssist SignIn</title>
 </head>
 <body>
     <div class="outer_form">
         <div class="form">
             <h2 class="title">
-                T'sAssist
+                TsAssist
             </h2>
             <p>Sign in to use online Teacher's Assistant</p>
 
-            <form>
-                <!-- <input type="hidden" name="csrf_token" value="{{ csrf_token }}"> -->
+            <form action="{{ url_for('signedin') }}" method="POST">
                 <input type="email" id="email" name="email" placeholder="Email" required>
                 <br>
                 <input type="password" id="password" name="password" placeholder="Password" required>

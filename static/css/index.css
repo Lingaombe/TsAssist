@@ -2,12 +2,24 @@ body{
     text-align: center;
 }
 .hero{
-    background-image: ;
-    height: 200px;
+    background-image: url("../assets/wall.jpg");
+}
+.hero p{
+    margin: auto;
+    width: 50%;
+    padding-bottom: 5px;
 }
 .features li{
     list-style-type: none;
-    display: inline-block;
     padding-inline: 20px;
     align-items: center;
+    height: 250px;
+}
+.features img{
+    display: flex;
+    float: right;
+}
+.featureList{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }

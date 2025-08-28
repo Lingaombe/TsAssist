@@ -43,6 +43,10 @@ a{
 nav{
     padding: 10px;
     display: flex;
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
     justify-content: space-between;
     align-items: center;
 }
@@ -61,5 +65,13 @@ nav img{
 nav .buttons{
     display: flex;
     gap: 20px;
-    align-items: center;;
+    align-items: center;
+}
+input, select, textarea{
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 40rem;
+    margin-bottom: 5px;
+    border: transparent;
 }

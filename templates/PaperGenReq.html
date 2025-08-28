@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="icon" href="/static/assets/favicon.ico">
+    <title>TsAssist</title>
+</head>
+<body> 
+    <!--
+        Dzina, malikisi, kagawidwe, kavutidwe
+        value ya ma input ku logic ya paper gen
+    -->
+    <nav>
+        <h1>TsAssist</h1>
+        <div class="buttons">
+            <ul>
+                <li><a href="/userIn">Home</a></li>
+                <li><a href="/settings">Settings</a></li>
+            </ul>
+            <br>
+            <img id="mode" src="../static/assets/moon.png" onclick="toggleMode()" />
+        </div>
+    </nav>
+    <main>
+        <p>
+            Please upload your question bank as a spreedsheet document<br>
+            If in word document, please make sure the questions are structured in a table format<br>
+            <!-- ma column tinena after sql schema -->
+            Ensure that your question bank is comprehensive and covers all topics you wish to include in the generated paper. <br>
+            After uploading, specify the total marks and any specific requirements for the paper generation. <br>
+            You can also manually input your desired questions below<br>
+            Click on "Generate Paper" to create a customized exam paper based on your inputs. <br>
+            <b>Please ensure you have provided all necessary school details in user <a href="/settings.html">Settings</a></b>
+        </p>
+        <section class="paper">
+            <input type="file" required placeholder="submit questions"/> <br>
+            <input type="text" required placeholder="subject" /><br>
+            <input type="text" required placeholder="name of paper" /> <br>
+            <input type="number" required placeholder="total marks" /> <br>
+            <p>Enter the marks distribustion ie 2 mcq, 5 short answer</p>
+            <select id="questionType" name="questionType">
+                <option value="mcq">MCQ</option>
+                <option value="short answer">Short Answer</option>
+                <option value="long answer">Long Answer</option>
+            </select> <br>
+            <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
+            <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
+            <button onclick="paperGen()">Generate paper</button>
+        </section>
+    </main>
+</body>
+<script src="../static/js/main.js"></script>
+</html>
