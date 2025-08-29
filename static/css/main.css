@@ -67,11 +67,26 @@ nav .buttons{
     gap: 20px;
     align-items: center;
 }
-input, select, textarea{
+#flash{
+    background-color: #A09BE7;
+    font-family: 'Comic Sans Ms';
+    font-size: 1rem;
     padding: 10px;
+    position: fixed;
+    top: 0;
+    width: fit-content;
     border-radius: 5px;
-    box-sizing: border-box;
-    width: 40rem;
-    margin-bottom: 5px;
-    border: transparent;
+    animation: opacityFade 6s forwards;
+}
+@keyframes opacityFade {
+    0% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+#addQuestionText{
+    position: relative;
+}
+#addQuestionButton{
+    float: right;
+    top: 0;
+    position: relative;
 }

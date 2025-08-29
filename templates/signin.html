@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/sign.css">
+    <link rel="stylesheet" href="/static/css/form.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <link rel="icon" href="/static/assets/favicon.ico">
     <title>TsAssist SignIn</title>
 </head>
 <body>
+    {% with messages = get_flashed_messages()%} 
+        {% if messages%}
+            {% for message in messages%}
+                <p id="flash">{{message}}</p>
+            {%endfor%}
+        {%endif%}
+    {%endwith%}
     <div class="outer_form">
         <div class="form">
             <h2 class="title">
@@ -29,5 +36,4 @@
         </div>
     </div>
 </body>
-<script></script>
 </html>

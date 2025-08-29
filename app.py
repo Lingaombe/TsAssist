@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import *
 
+import secrets
+secretKey = secrets.token_hex(16) # osapanga deploy
 import csv, uuid
 
 import mysql.connector
@@ -9,6 +11,7 @@ if conn.is_connected():
     print("Successfully connected to the database")
 
 app = Flask(__name__)
+app.secret_key = secretKey
 
 @app.route("/")
 def home():
@@ -29,15 +32,17 @@ def signedin():
     user = cursor.fetchone()
     # ngati password ndi email zili mu database
     if user:
-        return render_template("userIn.html", userName=user[1])
+        return render_template("userIn.html", userName=user[1]) #user atuluka list nde indexing kutengera ma column
     else:
         # ngati email yokha ili mu database, password yolakwika
-        cursor.execute("SELECT * FROM users WHERE userEmail = %s", (userEmail))
+        cursor.execute("SELECT * FROM users WHERE userEmail = %s", (userEmail,))
         userExists = cursor.fetchone()
         if userExists:  
-            return render_template("failedSignIn.html")
+            flash('Login unsuccessful, check your password and try again.', 'error')
+            return render_template("signin.html")
         # munthu alembetse
         else:
+            flash('User does not exist, please sign up!')
             return render_template("signup.html")
 
 @app.route("/signup", methods=["GET"])
@@ -46,41 +51,33 @@ def signup():
 
 @app.route('/signupData', methods=['POST'])
 def signupData():
-
     # kutenga formData kuchoka ku signup.html 
     data = request.form
     userName = data['fullname']
+    userRole = data['role']
     userEmail = data['email']
     userPassword = data['password']
 
     cursor = conn.cursor()
-    sql = "INSERT INTO users (userName, userPassword, userEmail) VALUES (%s, %s, %s);"
-    val = (userName, userPassword, userEmail)
+    sql = "INSERT INTO users (userName, userRole, userPassword, userEmail) VALUES (%s, %s, %s, %s);"
+    val = (userName, userRole, userPassword, userEmail)
     cursor.execute(sql, val)
     conn.commit()
     cursor.close()
     return render_template("userIn.html", userName=userName)    
 
-
-
-@app.route("/PaperGenReq", methods=['GET'])
-def PaperGenReq():
-    return render_template("PaperGenReq.html")
-
-@app.route("/getTables", methods=['GET'])
-def getTables():
-    cursor = conn.cursor()
-    cursor.execute("SHOW TABLES;")
-    tables = cursor.fetchall()
-    cursor.close()
-    tableNames = [t[0] for t in tables]
-    return jsonify({"tables":tableNames}), 200
+################################################### 404 NOT FOUND ###################################################
 
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
 
 ################################################### PAPER GEN ###################################################
+
+
+@app.route("/PaperGenReq", methods=['GET'])
+def PaperGenReq():
+    return render_template("PaperGenReq.html")
 
 DB = {"papers": {}}
 
@@ -119,6 +116,17 @@ def upload_csv():
 def preview_paper(paper_id):
     paper = DB["papers"][paper_id]
     return render_template("preview.html", paper=paper)
+
+################################################### DATABASE GETS ###################################################
+
+@app.route("/getTables", methods=['GET'])
+def getTables():
+    cursor = conn.cursor()
+    cursor.execute("SHOW TABLES;")
+    tables = cursor.fetchall()
+    cursor.close()
+    tableNames = [t[0] for t in tables]
+    return jsonify({"tables":tableNames}), 200
 
 
 if __name__ == "__main__":

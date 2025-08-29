@@ -17,4 +17,21 @@ select.addEventListener('change', function() {
     numInput.value = '';
 });
 
+function paperGen(){
+    FormData = {
+        'file': document.querySelector('input[type="file"]').files[0],
+        'subject': document.querySelector('input[placeholder="subject"]').value,
+        'paperName': document.querySelector('input[placeholder="name of paper"]').value,
+        'totalMarks': document.querySelector('input[placeholder="total marks"]').value,
+        'questionType': document.getElementById('questionType').value,
+        'numQuestions': document.getElementById('numQuestions').value
+    };
+}   
 
+// class isunge mafunso onse ngati objects, 
+
+function addQuestion(){
+    const questionText = document.getElementById('addQuestionText').value;
+    const questionType = document.getElementById('questionType').value;
+    const questionMarks = document.getElementById('questionMarks').value;
+}
