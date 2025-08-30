@@ -2,7 +2,7 @@ body{
     background-color: #FFF2F1;
     color: #1F2937;
     font-size: 1.2rem;
-    font-family:'Times New Roman', Times, serif;
+    font-family:'Comic Sans Ms', cursive, sans-serif;
 }
 .dark-mode {
     background-color: #1F2937;
@@ -89,4 +89,10 @@ nav .buttons{
     float: right;
     top: 0;
     position: relative;
+}
+summary{
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
 }

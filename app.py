@@ -64,7 +64,9 @@ def signupData():
     cursor.execute(sql, val)
     conn.commit()
     cursor.close()
-    return render_template("userIn.html", userName=userName)    
+    response = make_response(render_template("userIn.html", userName=userName))
+    response.set_cookie("userName", userName)
+    return response  
 
 ################################################### 404 NOT FOUND ###################################################
 
