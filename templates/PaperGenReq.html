@@ -48,8 +48,8 @@
                 In both cases, ensure the column order is question text, question type i.e essay, and marks allocated to question.<br>
                 Incase of MCQs, please ensure there are separate columns for all options, marks column should be last<br>
             </p>
-            <section class="form">
-                <input type="file" accept=".xsl, .docx, .doc, .sxsl" required placeholder="submit questions"/> <br>
+            <form class="form" method="post" action="/bankPaperGen" enctype="multipart/form-data">
+                <input type="file" accept=".xsl, .docx, .doc, .sxsl" required placeholder="submit questions" name="questionBank"/> <br>
                 <input type="text" required placeholder="subject" /><br>
                 <input type="text" required placeholder="name of paper" /> <br>
                 <input type="number" required placeholder="total marks" /> <br>
@@ -61,8 +61,8 @@
                 </select> <br>
                 <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
                 <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
-                <button onclick="bankPaperGen()">Generate paper</button>
-            </section>
+                <button href="/bankPaperGen">Generate paper</button>
+            </form>
         </details>
         <br>
 

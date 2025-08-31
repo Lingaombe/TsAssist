@@ -1,4 +1,5 @@
 from flask import *
+import pandas as pd
 
 import secrets
 secretKey = secrets.token_hex(16) # osapanga deploy
@@ -11,7 +12,7 @@ if conn.is_connected():
     print("Successfully connected to the database")
 
 app = Flask(__name__)
-app.secret_key = secretKey
+app.secret_key = secretKey 
 
 @app.route("/")
 def home():
@@ -64,7 +65,7 @@ def signupData():
     cursor.execute(sql, val)
     conn.commit()
     cursor.close()
-    response = make_response(render_template("userIn.html", userName=userName))
+    response = make_response(render_template("userIn.html", userName=userName)) #kusunga ma cookies
     response.set_cookie("userName", userName)
     return response  
 
@@ -83,36 +84,11 @@ def PaperGenReq():
 
 DB = {"papers": {}}
 
-@app.route("/upload", methods=["GET", "POST"])
-def upload_csv():
-    if request.method == "POST":
-        file = request.files["csv_file"]
-        paper_id = str(uuid.uuid4())
-        paper = {"id": paper_id, "sections": {}}
-
-        reader = csv.DictReader(file.stream.read().decode("utf-8").splitlines())
-        for row in reader:
-            sec_name = row["section"].strip()
-            if sec_name not in paper["sections"]:
-                paper["sections"][sec_name] = {"name": sec_name, "questions": []}
-
-            q = {
-                "id": str(uuid.uuid4()),
-                "type": row["type"],
-                "text": row["question"],
-                "marks": int(row["marks"]),
-                "difficulty": row.get("difficulty"),
-                "bloom": row.get("bloom"),
-                "tags": row.get("tags", "").split(";"),
-                "options": [row.get("option_a"), row.get("option_b"), row.get("option_c"), row.get("option_d")],
-                "answer": row.get("answer") or row.get("correct")
-            }
-            paper["sections"][sec_name]["questions"].append(q)
-
-        DB["papers"][paper_id] = paper
-        return redirect(url_for("preview_paper", paper_id=paper_id))
-
-    return render_template("upload.html")
+@app.route("/bankPaperGen", methods=['GET', 'POST'])
+def bankPaperGen(): 
+    data = request.form
+    file = data['fullname']
+    file_path = 'your_file.xls'
 
 @app.route("/papers/<paper_id>/preview")
 def preview_paper(paper_id):
