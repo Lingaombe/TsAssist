@@ -13,6 +13,13 @@
         Dzina, malikisi, kagawidwe, kavutidwe
         value ya ma input ku logic ya paper gen
     -->
+    {% with messages = get_flashed_messages()%} 
+        {% if messages%}
+            {% for message in messages%}
+                <p id="flash">{{message}}</p>
+            {%endfor%}
+        {%endif%}
+    {%endwith%}
     <nav>
         <h1>TsAssist</h1>
         <div class="buttons">
@@ -38,7 +45,15 @@
             Click on "Generate Paper" to create a customized exam paper based on your inputs. <br>
             <b>PLEASE ENSURE YOU HAVE PROVIDED ALL NECESSARY SCHOOL DETAILS IN USER <a href="/settings.html">SETTINGS</a></b>
         </p><br>
-
+        <!-- <form class="form">
+            <input type="text" required placeholder="Enter your school name" name="schoolName"/><br>
+            <input type="file" accept=".png, .jpg, .jpeg" required placeholder="Upload school logo" name="schoolLogo"/> <br>
+            <input type="text" required placeholder="subject" name="subject"/><br>
+            <input type="text" required placeholder="name of paper" name="paperName"/> <br>
+            <input type="number" required placeholder="total marks" name="totalMarks"/> <br>
+            <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>        
+            <button type="submit">Save Details</button>
+        </form> -->
         <details>
             <summary>1. Upload Questions as document</summary>
             <div class="details">
@@ -62,7 +77,7 @@
                     </select> <br>
                     <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
                     <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
-                    <button href="/bankPaperGen">Generate paper</button>
+                    <button type="submit">Generate paper</button>
                 </form>
             </div>
         </details>
@@ -77,18 +92,18 @@
                     Ensure that you format your questions clearly, specifying the question type i.e long answer and the marks allocated for each question.<br>
                     Cross check your question is to your liking before clicking "+" to add next question
                 </p>
-                <section class="form">
-                    <input type="text" required placeholder="subject" /><br>
-                    <input type="text" required placeholder="name of paper" /> <br>
-                    <input type="number" required placeholder="total marks" /> <br>
+                <form class="form" method="post" action="/addQuestion" enctype="multipart/form-data">
+                    <input type="text" required placeholder="subject" name="subject"/><br>
+                    <input type="text" required placeholder="name of paper" name="paperName"/> <br>
+                    <input type="number" required placeholder="total marks" name="totalMarks"/> <br>
                     <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
                     <!-- mafunso abwere ngati list kupangidwa append ku javascript object makey question, marks, type -->
-                    <textarea id="addQuestionText" rows="10" cols="50" placeholder="Enter your question here"></textarea><br>
-                    <input type="text" id="questionType" placeholder="question type e.g mcq, short answer, long answer"/><br>
-                    <input type="number" id="questionMarks" placeholder="marks allocated to question"/><br>
+                    <textarea id="addQuestionText" rows="10" cols="50" placeholder="Enter your question here" name="instructions"></textarea><br>
+                    <input type="text" id="questionType" placeholder="question type e.g mcq, short answer, long answer" name="questionType"/><br>
+                    <input type="number" id="questionMarks" placeholder="marks allocated to question" name="questionMarks"/><br>
                     <button onclick="addQuestion()" id="addQuestionButton"><b>+</b></button> 
-                    <button onclick="manualPaperGen()">Generate paper</button>
-                </section>
+                    <button type="submit">Generate paper</button>
+                </form>
             </div>    
         </details>
         <br>
@@ -101,21 +116,17 @@
                     You can upload your document in formats such as PDF, Word, or plain text.<br>
                     Ensure that your document is comprehensive and covers all topics you wish to include in the generated paper. <br>
                 </p>
-                <section class="form">
+                <form class="form">
                     <input type="file" required placeholder="submit document"/> <br>
                     <input type="text" required placeholder="subject" /><br>
                     <input type="text" required placeholder="name of paper" /> <br>
                     <input type="number" required placeholder="total marks" /> <br>
-                    <select id="questionType" name="questionType">
-                        <option value="" disabled selected>Specify marks distribution</option>
-                        <option value="mcq">MCQ</option>
-                        <option value="short answer">Short Answer</option>
-                        <option value="long answer">Long Answer</option>
-                    </select> <br>
+                    <input type="text" id="questionType" placeholder="question type e.g mcq, short answer, long answer"/><br>
                     <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
+                    <button onclick="addSection()" id="addSectionButton"><b>+</b></button> 
                     <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
                     <button onclick="docPaperGen()">Generate paper</button>
-                </section>
+                </form>
             </div>
         </details>
         <br>                    

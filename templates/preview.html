@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ data.subjectName }} - Preview</title>
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ data.subjectName }}</h1>
+        <p><strong>Author:</strong> {{ data.paperName }}</p>
+        <p><strong>Published:</strong> {{ data.questionType }}</p>
+        
+        <hr>
+
+        <div class="content">
+            {{ data.totalMarks | Here }}
+        </div>
+
+        <hr>
+
+        <a href="{{ url_for('index') }}">Back to home</a>
+    </div>
+</body>
+</html>

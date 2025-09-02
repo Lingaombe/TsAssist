@@ -30,8 +30,23 @@ function paperGen(){
 
 // class isunge mafunso onse ngati objects, 
 
+document.getElementById('questionType').addEventListener('change', function() {
+    const questionType = this.value;
+    if (questionType == "mcq"){
+        for (let i = 1; i <= 4; i++) {
+            let input = document.createElement("input");
+            input.type = "text";
+            input.name = "option" + i;
+            input.placeholder = "Option " + i;
+            container.appendChild(input);
+            container.appendChild(document.createElement("br"));
+        }
+    }
+});
 function addQuestion(){
     const questionText = document.getElementById('addQuestionText').value;
     const questionType = document.getElementById('questionType').value;
     const questionMarks = document.getElementById('questionMarks').value;
 }
+
+console.log("MCQ"=="mcq")

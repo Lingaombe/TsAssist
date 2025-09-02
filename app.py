@@ -7,6 +7,7 @@ import csv, uuid
 
 import mysql.connector
 conn = mysql.connector.connect(host="localhost", user="root", password="Lingaombe@2001", database="TsAssist") 
+cursor = conn.cursor()
 
 if conn.is_connected():
     print("Successfully connected to the database")
@@ -73,7 +74,9 @@ def signupData():
 
 @app.route("/settings")
 def settings():
-    return render_template("userSettings.html")
+    username = request.cookies.get('userName') 
+
+    return render_template("userSettings.html", userName=username)
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -86,8 +89,6 @@ def page_not_found(error):
 def PaperGenReq():
     return render_template("PaperGenReq.html")
 
-DB = {"papers": {}}
-
 @app.route("/bankPaperGen", methods=['GET', 'POST'])
 def bankPaperGen(): 
     data = request.form
@@ -96,8 +97,48 @@ def bankPaperGen():
 
 @app.route("/papers/<paper_id>/preview")
 def preview_paper(paper_id):
-    paper = DB["papers"][paper_id]
+    cursor = conn.cursor(dictionary=True)  
+    cursor.execute("SELECT * FROM papers WHERE id = %s", (paper_id,))
+    paper = cursor.fetchone()
+    cursor.close()
+
+    if not paper:
+        abort(404, description="Paper not found")
+
     return render_template("preview.html", paper=paper)
+
+##################################### GEN 2
+@app.route("/addQuestion", methods=['POST'])
+def addQuestion():
+    data = {
+    "subjectName" : request.form['subject'],
+    "paperName" : request.form['paperName'],
+    "totalMarks" : request.form['totalMarks'],
+    "questionType" : request.form['questionType'],
+    "questionMarks" : request.form['questionMarks'],
+    "instructions" : request.form['instructions']
+    }
+
+    cursor = conn.cursor()
+    sql = "INSERT INTO questions (subjectName, paperName, questionType, questionMarks) VALUES (%s, %s, %s, %s);"
+    val = (data["subjectName"], data["paperName"], data["questionType"], data["questionMarks"])
+    cursor.execute(sql, val)
+    if cursor.rowcount > 0:
+        flash('Question Added Successful!', "success") #ngati funso laikidwa mu db
+    else:
+        flash('Question Not Added!', "error") #ngati funso silinaikidwe mu db
+
+    conn.commit()
+    cursor.close()
+
+    return render_template("PaperGenReq.html")
+
+@app.route("/manualPaperGen", methods=['POST'])
+def manualPaperGen():
+    data = {
+    }
+
+    return redirect(url_for('preview_paper', data=data))
 
 ################################################### DATABASE GETS ###################################################
 
