@@ -96,3 +96,12 @@ summary{
     margin-bottom: 10px;
     font-size: 1.2rem;
 }
+.details{
+    display: grid;
+    grid-template-columns: 40% 55%;
+}
+@media screen and (max-width: 1024px){
+    .details{
+        display: inline;
+    }
+} 

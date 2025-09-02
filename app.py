@@ -69,7 +69,11 @@ def signupData():
     response.set_cookie("userName", userName)
     return response  
 
-################################################### 404 NOT FOUND ###################################################
+################################################### MISCILLANEOUS ###################################################
+
+@app.route("/settings")
+def settings():
+    return render_template("userSettings.html")
 
 @app.errorhandler(404)
 def page_not_found(error):

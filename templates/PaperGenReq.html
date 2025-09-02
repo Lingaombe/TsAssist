@@ -41,76 +41,82 @@
 
         <details>
             <summary>1. Upload Questions as document</summary>
-            <p>
-                This option is for generating a question paper from an uploaded question bank<br>
-                Please upload your question bank as a spreedsheet document<br>
-                If in word document, please make sure the questions are structured in a table format<br>
-                In both cases, ensure the column order is question text, question type i.e essay, and marks allocated to question.<br>
-                Incase of MCQs, please ensure there are separate columns for all options, marks column should be last<br>
-            </p>
-            <form class="form" method="post" action="/bankPaperGen" enctype="multipart/form-data">
-                <input type="file" accept=".xsl, .docx, .doc, .sxsl" required placeholder="submit questions" name="questionBank"/> <br>
-                <input type="text" required placeholder="subject" /><br>
-                <input type="text" required placeholder="name of paper" /> <br>
-                <input type="number" required placeholder="total marks" /> <br>
-                <select id="questionType" name="questionType">
-                    <option value="" disabled selected>Specify marks distribution</option>
-                    <option value="mcq">MCQ</option>
-                    <option value="short answer">Short Answer</option>
-                    <option value="long answer">Long Answer</option>
-                </select> <br>
-                <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
-                <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
-                <button href="/bankPaperGen">Generate paper</button>
-            </form>
+            <div class="details">
+                <p>
+                    This option is for generating a question paper from an uploaded question bank<br>
+                    Please upload your question bank as a spreedsheet document<br>
+                    If in word document, please make sure the questions are structured in a table format<br>
+                    In both cases, ensure the column order is question text, question type i.e essay, and marks allocated to question.<br>
+                    Incase of MCQs, please ensure there are separate columns for all options, marks column should be last<br>
+                </p>
+                <form class="form" method="post" action="/bankPaperGen" enctype="multipart/form-data">
+                    <input type="file" accept=".xsl, .docx, .doc, .sxsl" required placeholder="submit questions" name="questionBank"/> <br>
+                    <input type="text" required placeholder="subject" /><br>
+                    <input type="text" required placeholder="name of paper" /> <br>
+                    <input type="number" required placeholder="total marks" /> <br>
+                    <select id="questionType" name="questionType">
+                        <option value="" disabled selected>Specify marks distribution</option>
+                        <option value="mcq">MCQ</option>
+                        <option value="short answer">Short Answer</option>
+                        <option value="long answer">Long Answer</option>
+                    </select> <br>
+                    <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
+                    <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
+                    <button href="/bankPaperGen">Generate paper</button>
+                </form>
+            </div>
         </details>
         <br>
 
         <details>
             <summary>2. Enter Questions Manually</summary>
-            <p>
-                This option is for generating a question paper from manually entered questions<br>
-                You can enter your questions directly into the provided text area.<br>
-                Ensure that you format your questions clearly, specifying the question type i.e long answer and the marks allocated for each question.<br>
-                Cross check your question is to your liking before clicking "+" to add next question
-            </p>
-            <section class="form">
-                <input type="text" required placeholder="subject" /><br>
-                <input type="text" required placeholder="name of paper" /> <br>
-                <input type="number" required placeholder="total marks" /> <br>
-                <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
-                <!-- mafunso abwere ngati list kupangidwa append ku javascript object makey question, marks, type -->
-                <textarea id="addQuestionText" rows="10" cols="50" placeholder="Enter your question here"></textarea><br>
-                <input type="text" id="questionType" placeholder="question type e.g mcq, short answer, long answer"/><br>
-                <input type="number" id="questionMarks" placeholder="marks allocated to question"/><br>
-                <button onclick="addQuestion()" id="addQuestionButton"><b>+</b></button> 
-                <button onclick="manualPaperGen()">Generate paper</button>
-            </section>
+            <div class="details">
+                <p>
+                    This option is for generating a question paper from manually entered questions<br>
+                    You can enter your questions directly into the provided text area.<br>
+                    Ensure that you format your questions clearly, specifying the question type i.e long answer and the marks allocated for each question.<br>
+                    Cross check your question is to your liking before clicking "+" to add next question
+                </p>
+                <section class="form">
+                    <input type="text" required placeholder="subject" /><br>
+                    <input type="text" required placeholder="name of paper" /> <br>
+                    <input type="number" required placeholder="total marks" /> <br>
+                    <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
+                    <!-- mafunso abwere ngati list kupangidwa append ku javascript object makey question, marks, type -->
+                    <textarea id="addQuestionText" rows="10" cols="50" placeholder="Enter your question here"></textarea><br>
+                    <input type="text" id="questionType" placeholder="question type e.g mcq, short answer, long answer"/><br>
+                    <input type="number" id="questionMarks" placeholder="marks allocated to question"/><br>
+                    <button onclick="addQuestion()" id="addQuestionButton"><b>+</b></button> 
+                    <button onclick="manualPaperGen()">Generate paper</button>
+                </section>
+            </div>    
         </details>
         <br>
 
         <details>
             <summary>3. Upload Document/Notes</summary>
-            <p>
-                This option is for generating a question paper from a given document or notes<br>
-                You can upload your document in formats such as PDF, Word, or plain text.<br>
-                Ensure that your document is comprehensive and covers all topics you wish to include in the generated paper. <br>
-            </p>
-            <section class="form">
-                <input type="file" required placeholder="submit document"/> <br>
-                <input type="text" required placeholder="subject" /><br>
-                <input type="text" required placeholder="name of paper" /> <br>
-                <input type="number" required placeholder="total marks" /> <br>
-                <select id="questionType" name="questionType">
-                    <option value="" disabled selected>Specify marks distribution</option>
-                    <option value="mcq">MCQ</option>
-                    <option value="short answer">Short Answer</option>
-                    <option value="long answer">Long Answer</option>
-                </select> <br>
-                <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
-                <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
-                <button onclick="docPaperGen()">Generate paper</button>
-            </section>
+            <div class="details">
+                <p>
+                    This option is for generating a question paper from a given document or notes<br>
+                    You can upload your document in formats such as PDF, Word, or plain text.<br>
+                    Ensure that your document is comprehensive and covers all topics you wish to include in the generated paper. <br>
+                </p>
+                <section class="form">
+                    <input type="file" required placeholder="submit document"/> <br>
+                    <input type="text" required placeholder="subject" /><br>
+                    <input type="text" required placeholder="name of paper" /> <br>
+                    <input type="number" required placeholder="total marks" /> <br>
+                    <select id="questionType" name="questionType">
+                        <option value="" disabled selected>Specify marks distribution</option>
+                        <option value="mcq">MCQ</option>
+                        <option value="short answer">Short Answer</option>
+                        <option value="long answer">Long Answer</option>
+                    </select> <br>
+                    <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
+                    <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
+                    <button onclick="docPaperGen()">Generate paper</button>
+                </section>
+            </div>
         </details>
         <br>                    
     </main>
