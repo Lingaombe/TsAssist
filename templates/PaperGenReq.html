@@ -33,18 +33,33 @@
     </nav>
     <main> 
         <h2>Exam Paper Generation</h2>
-        <p>
-            There are three options for generating a question paper:<br>
-            <ol>
-                <li>Upload Questions as document</li>
-                <li>Enter Questions Manually</li>
-                <li>Upload Document/Notes</li>
-            </ol>
-            Choose the option that best suits your needs and follow the instructions provided.<br>
-            After uploading, specify the total marks and any specific requirements for the paper generation. <br>
-            Click on "Generate Paper" to create a customized exam paper based on your inputs. <br>
-            <b>PLEASE ENSURE YOU HAVE PROVIDED ALL NECESSARY SCHOOL DETAILS IN USER <a href="/settings.html">SETTINGS</a></b>
-        </p><br>
+        <div class="details">
+            <div class="text">
+                <p>
+                    There are three options for generating a question paper:
+                </p>
+                    <ol>
+                        <li>Upload Questions as document</li>
+                        <li>Enter Questions Manually</li>
+                        <li>Upload Document/Notes</li>
+                    </ol>
+                <p>
+                    Choose the option that best suits your needs and follow the instructions provided.</p>
+                    <p>After uploading, specify the total marks and any specific requirements for the paper generation. </p>
+                    <p>Click on "Generate Paper" to create a customized exam paper based on your inputs. </p>
+                </p>
+            </div>
+            <form class="form" action="{{ url_for('paperDetails')}}" method="post" enctype="multipart/form-data">
+                <input type="file" accept=".png, .jpg, .jpeg" required name="logo" id="logo"/><br>
+                <input name="schoolName" type="text" required placeholder="school name" /><br>
+                <input name="subjectName" type="text" required placeholder="subject" /><br>
+                <input name="paperName" type="text" required placeholder="name of paper" /> <br>
+                <input name="totalMarks" type="number" required placeholder="total marks" /> <br>
+                <textarea name="instructions" rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
+                <button type="submit">Save Details</button>
+                <p><b>PLEASE ENSURE YOU SAVE DETAILS BEFORE PROCEEDING</b></p>
+            </form>
+        </div>
         <details>
             <summary>1. Upload Questions as document</summary>
             <div class="details">
@@ -52,14 +67,12 @@
                     This option is for generating a question paper from an uploaded question bank<br>
                     Please upload your question bank as a spreedsheet document<br>
                     If in word document, please make sure the questions are structured in a table format<br>
-                    In both cases, ensure the column order is question text, question type i.e essay, and marks allocated to question.<br>
+                    In both cases, ensure the column order is paper name, question text, question type i.e essay, and marks allocated to question.<br>
                     Incase of MCQs, please ensure there are separate columns for all options, marks column should be last<br>
                 </p>
                 <form class="form" method="post" action="/bankPaperGen" enctype="multipart/form-data">
                     <input type="file" accept=".xsl, .docx, .doc, .sxsl" required placeholder="submit questions" name="questionBank"/> <br>
-                    <input type="text" required placeholder="subject" /><br>
-                    <input type="text" required placeholder="name of paper" /> <br>
-                    <input type="number" required placeholder="total marks" /> <br>
+                    
                     <select id="questionType" name="questionType">
                         <option value="" disabled selected>Specify marks distribution</option>
                         <option value="mcq">MCQ</option>
@@ -67,7 +80,6 @@
                         <option value="long answer">Long Answer</option>
                     </select> <br>
                     <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
-                    <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
                     <button type="submit">Generate paper</button>
                 </form>
             </div>
@@ -84,10 +96,6 @@
                     Cross check your question is to your liking before clicking "+" to add next question
                 </p>
                 <form class="form" method="post" action="/addQuestion" enctype="multipart/form-data">
-                    <input type="text" required placeholder="subject" name="subject"/><br>
-                    <input type="text" required placeholder="name of paper" name="paperName"/> <br>
-                    <input type="number" required placeholder="total marks" name="totalMarks"/> <br>
-                    <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
                     <!-- mafunso abwere ngati list kupangidwa append ku javascript object makey question, marks, type -->
                     <textarea id="addQuestionText" rows="10" cols="50" placeholder="Enter your question here" name="instructions"></textarea><br>
                     <input type="text" id="questionType" placeholder="question type e.g mcq, short answer, long answer" name="questionType"/><br>
@@ -109,13 +117,9 @@
                 </p>
                 <form class="form">
                     <input type="file" required placeholder="submit document"/> <br>
-                    <input type="text" required placeholder="subject" /><br>
-                    <input type="text" required placeholder="name of paper" /> <br>
-                    <input type="number" required placeholder="total marks" /> <br>
                     <input type="text" id="questionType" placeholder="question type e.g mcq, short answer, long answer"/><br>
                     <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
                     <button onclick="addSection()" id="addSectionButton"><b>+</b></button> 
-                    <textarea rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
                     <button onclick="docPaperGen()">Generate paper</button>
                 </form>
             </div>

@@ -43,10 +43,5 @@ document.getElementById('questionType').addEventListener('change', function() {
         }
     }
 });
-function addQuestion(){
-    const questionText = document.getElementById('addQuestionText').value;
-    const questionType = document.getElementById('questionType').value;
-    const questionMarks = document.getElementById('questionMarks').value;
-}
 
-console.log("MCQ"=="mcq")
+const logo = document.getElementById("logo");
