@@ -1,5 +1,6 @@
 from flask import *
 import pandas as pd
+import random 
 
 from ollamafreeapi import OllamaFreeAPI
 client = OllamaFreeAPI()
@@ -87,79 +88,82 @@ def page_not_found(error):
 
 ################################################### PAPER GEN ###################################################
 
-class Paper:
-    def __init__(self, schoolName, totalMarks, instructions):
-        # self.schoolLogo = schoolLogo
-        self.schoolName = schoolName
-        self.totalMarks = totalMarks
-        self.instructions = instructions
+# class Paper:
+#     def __init__(self, schoolName, totalMarks, instructions):
+#         self.schoolName = schoolName
+#         self.totalMarks = totalMarks
+#         self.instructions = instructions
 
-@app.route("/paperDetails", methods=['POST'])
-def paperDetails():
-    # logo = request.form['logo']
-    schoolName = request.form['schoolName']
-    marks = request.form['totalMarks']
-    instructions = request.form['instructions']
+# @app.route("/paperDetails", methods=['POST'])
+# def paperDetails():
+#     schoolName = request.form['schoolName']
+#     marks = request.form['totalMarks']
+#     instructions = request.form['instructions']
 
-    paper = Paper(schoolName, marks, instructions)
-    print(paper.schoolName)
-    flash('Details added successfully!')
-    return render_template("PaperGenReq.html")
+#     paper = Paper(schoolName, marks, instructions)
+#     print(paper.schoolName)
+#     flash('Details added successfully!')
+#     return render_template("PaperGenReq.html")
     
 @app.route("/PaperGenReq", methods=['GET'])
 def PaperGenReq():
     return render_template("PaperGenReq.html")
 
-@app.route("/papers/<paper_id>/preview")
-def preview_paper(paper_id):
-    cursor = conn.cursor(dictionary=True)  
-    cursor.execute("SELECT * FROM papers WHERE id = %s", (paper_id,))
-    paper = cursor.fetchone()
-    cursor.close()
-
-    if not paper:
-        abort(404, description="Paper not found")
-
-    return render_template("preview.html", paper=paper)
-
 ################################################### GEN ONE
 
-@app.route("/bankPaperGen", methods=['GET', 'POST'])
-def bankPaperGen(): 
-    data = request.form
-    file = data['fullname']
-    file_path = 'your_file.xls'
+# @app.route("/bankPaperGen", methods=['GET', 'POST'])
+# def bankPaperGen(): 
+    
 
 ################################################### GEN TWO
 
 @app.route("/addQuestion", methods=['POST'])
 def addQuestion():
-    data = {
-    "paperName" : request.form['paperName'],
-    "questionType" : request.form['questionType'],
-    "questionMarks" : request.form['questionMarks'],
-    }
+    if request.method == 'POST':
+        if 'questionDets' in request.form: #zokhudza mafunso
+            data = request.form
+            cursor = conn.cursor()
+            if data['questionType'] in ['mcq','MCQ','Mcq','MCq','mCQ']:
+                sql = "INSERT INTO questions (questionBody, questionType, questionOption1, questionOption2, questionOption3, questionOption4, questionMarks) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+                val = (data['questionBody'], data['questionType'],data['questionOption1'],data['questionOption2'],data['questionOption3'],data['questionOption4'],data['questionMarks'] )
+            else:
+                sql = "INSERT INTO questions (questionBody, questionType, questionMarks) VALUES (%s, %s, %s);"
+                val = (data['questionBody'], data['questionType'],data['questionMarks'] )
+            
+            cursor.execute(sql, val)
+            if cursor.rowcount > 0:
+                flash('Question Added Successful!', "success") #ngati funso laikidwa mu db
+            else:
+                flash('Question Not Added!', "error") #ngati funso silinaikidwe mu db
 
-    cursor = conn.cursor()
-    sql = "INSERT INTO questions (paperName, questionType, questionMarks) VALUES (%s, %s, %s);"
-    val = (data["paperName"], data["questionType"], data["questionMarks"])
-    cursor.execute(sql, val)
-    if cursor.rowcount > 0:
-        flash('Question Added Successful!', "success") #ngati funso laikidwa mu db
-    else:
-        flash('Question Not Added!', "error") #ngati funso silinaikidwe mu db
+            conn.commit()
+            cursor.close()
+        if 'paperDets' in request.form: #zokhudza pepala maliki 
+            data1 = request.form
+            for i in data1:
+                print(i , data1[i])
+            tMarks = data1['totalMarks']
+            print(tMarks)
+            # questionBody = data['questionBody'] 
+            # questionType = data['questionType']
+            # questionMarks = data['questionMarks']
 
-    conn.commit()
-    cursor.close()
-
-    return render_template("PaperGenReq.html")
+    return tMarks, render_template("PaperGenReq.html") #flash message render
 
 @app.route("/manualPaperGen", methods=['POST'])
 def manualPaperGen():
-    paperDetails() #returns paper object with attrs logo, name, subject, name, marks, ins
-    totalMarks = paper.totalMarks
+    #tenga total marks kupanga loop
+    #delete used question
+    totalMarks = 0
+    while totalMarks <= tMarks:
+        #append funso ku list/new dictionary
+        qId = random.randint(1, 10)
+    ques = cursor.execute("SELECT * FROM questions where questionId = %d;",(qId,))
+    questionDict = {}
+    questionList = ()
+    questions = cursor.fetchall()
 
-    return redirect(url_for('preview_paper', data=data))
+    return redirect(url_for('preview_paper'))
 
 ################################################## GEN THREE
 

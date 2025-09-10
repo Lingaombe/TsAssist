@@ -45,21 +45,21 @@
                     </ol>
                 <p>
                     Choose the option that best suits your needs and follow the instructions provided.</p>
-                    <p>After uploading, specify the total marks and any specific requirements for the paper generation. </p>
+                    <p>Upload school logo, specify the total marks and any specific requirements for the paper i.e 'calculators allowed'. </p>
                     <p>Click on "Generate Paper" to create a customized exam paper based on your inputs. </p>
                 </p>
             </div>
-            <form class="form" action="{{ url_for('paperDetails')}}" method="post" enctype="multipart/form-data">
+            <form class="form" method="POST" action="{{ url_for('addQuestion')}}">
                 <input type="file" accept=".png, .jpg, .jpeg" required name="logo" id="logo"/><br>
                 <input name="schoolName" type="text" required placeholder="school name" /><br>
                 <input name="subjectName" type="text" required placeholder="subject" /><br>
                 <input name="paperName" type="text" required placeholder="name of paper" /> <br>
                 <input name="totalMarks" type="number" required placeholder="total marks" /> <br>
                 <textarea name="instructions" rows="4" cols="50" placeholder="Enter any specific instructions for the paper here"></textarea> <br>
-                <button type="submit">Save Details</button>
+                <button type="submit" name="paperDets">Save Details</button>
                 <p><b>PLEASE ENSURE YOU SAVE DETAILS BEFORE PROCEEDING</b></p>
             </form>
-        </div>
+        </div><br>
         <details>
             <summary>1. Upload Questions as document</summary>
             <div class="details">
@@ -95,13 +95,17 @@
                     Ensure that you format your questions clearly, specifying the question type i.e long answer and the marks allocated for each question.<br>
                     Cross check your question is to your liking before clicking "+" to add next question
                 </p>
-                <form class="form" method="post" action="/addQuestion" enctype="multipart/form-data">
+                <form class="form" method="POST" action="{{ url_for('addQuestion')}}">
                     <!-- mafunso abwere ngati list kupangidwa append ku javascript object makey question, marks, type -->
-                    <textarea id="addQuestionText" rows="10" cols="50" placeholder="Enter your question here" name="instructions"></textarea><br>
+                    <textarea id="questionBody" rows="10" cols="50" placeholder="Enter your question here" name="questionBody"></textarea><br>
                     <input type="text" id="questionType" placeholder="question type e.g mcq, short answer, long answer" name="questionType"/><br>
+                    <input type="text" id="questionOption1" name="questionOption1" placeholder="MCQ option1" /><br>
+                    <input type="text" id="questionOption2" name="questionOption2" placeholder="MCQ option2" /><br>
+                    <input type="text" id="questionOption3" name="questionOption3" placeholder="MCQ option3" /><br>
+                    <input type="text" id="questionOption4" name="questionOption4" placeholder="MCQ option4" /><br>
                     <input type="number" id="questionMarks" placeholder="marks allocated to question" name="questionMarks"/><br>
-                    <button onclick="addQuestion()" id="addQuestionButton"><b>+</b></button> 
-                    <button type="submit">Generate paper</button>
+                    <button name="questionDets" id="addQuestionButton"><b>+</b></button> 
+                    <button type="submit" name="manualPaperGen">Generate paper</button>
                 </form>
             </div>    
         </details>
