@@ -8,7 +8,7 @@
 
 * 🧑‍🏫 **Teachers**
 
-  * Upload questions manually or via Excel
+  * Upload questions manually or as document(excel/word)
   * Generate question papers based on course, pattern, and marks
   * Manage and edit own question bank
 
