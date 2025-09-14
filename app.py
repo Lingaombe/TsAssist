@@ -1,13 +1,13 @@
 from flask import *
 import pandas as pd
 import random 
+from werkzeug.utils import secure_filename
 
 from ollamafreeapi import OllamaFreeAPI
 client = OllamaFreeAPI()
 
 import secrets
 secretKey = secrets.token_hex(16) # osapanga deploy
-import csv, uuid
 
 import mysql.connector
 conn = mysql.connector.connect(host="localhost", user="root", password="Lingaombe@2001", database="TsAssist") 
@@ -104,6 +104,10 @@ def page_not_found(error):
 #     print(paper.schoolName)
 #     flash('Details added successfully!')
 #     return render_template("PaperGenReq.html")
+
+@app.route('/previewPaper')
+def previewPaper():
+    return render_template("preview.html")
     
 @app.route("/PaperGenReq", methods=['GET'])
 def PaperGenReq():
@@ -113,6 +117,32 @@ def PaperGenReq():
 
 # @app.route("/bankPaperGen", methods=['GET', 'POST'])
 # def bankPaperGen(): 
+@app.post('/bankPaperGen')
+def bankPaperGen():
+    uploaded_file = request.files['file']
+
+    # Read Excel directly into DataFrame
+    df = pd.read_excel(uploaded_file)
+
+    for _, row in df.iterrows(): #osatenga index only data
+        cols = len(df.columns)
+        if cols == 4: #ndeti si mcq
+            cursor.execute(
+                "INSERT INTO bankQuestions (paperName, questionBody, questionType, questionMarks) VALUES (%s, %s, %s)",
+                (row['paperName'], (row['questionBody']), row['questionType'], row['questionMarks'])
+            )
+        elif cols == 8:
+            cursor.execute(
+                "INSERT INTO bankQuestions (paperName, questionBody, questionType, questionOption1, questionOption2, questionOption3, questionOption4, questionMarks) VALUES (%s, %s, %s)",
+                (row['paperName'], (row['questionBody']), row['questionType'], row['questionOption1'], row['questionOption2'], row['questionOption3'], row['questionOption4'], row['questionMarks'])
+            )
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return render_template("loading.html")
+
     
 
 ################################################### GEN TWO
@@ -140,13 +170,12 @@ def addQuestion():
             cursor.close()
         if 'paperDets' in request.form: #zokhudza pepala maliki 
             data1 = request.form
-            for i in data1:
-                print(i , data1[i])
+            sName = data1['schoolName']
+            pName = data1['paperName']
+            subName = data1['subjectName']
+            instructions = data1['instructions']
             tMarks = data1['totalMarks']
-            print(tMarks)
-            # questionBody = data['questionBody'] 
-            # questionType = data['questionType']
-            # questionMarks = data['questionMarks']
+            
 
     return tMarks, render_template("PaperGenReq.html") #flash message render
 
@@ -163,7 +192,7 @@ def manualPaperGen():
     questionList = ()
     questions = cursor.fetchall()
 
-    return redirect(url_for('preview_paper'))
+    return redirect(url_for('previewPaper'))
 
 ################################################## GEN THREE
 

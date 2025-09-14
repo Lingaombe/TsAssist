@@ -21,7 +21,7 @@
         {%endif%}
     {%endwith%}
     <nav>
-        <h1>TsAssist</h1>
+        <h2>TsAssist</h2>
         <div class="buttons">
             <ul>
                 <li><a href="/signedin">Home</a></li>
@@ -32,7 +32,7 @@
         </div>
     </nav>
     <main> 
-        <h2>Exam Paper Generation</h2>
+        <h2 style="text-align: center;">Exam Paper Generation</h2><br>
         <div class="details">
             <div class="text">
                 <p>
@@ -45,7 +45,7 @@
                     </ol>
                 <p>
                     Choose the option that best suits your needs and follow the instructions provided.</p>
-                    <p>Upload school logo, specify the total marks and any specific requirements for the paper i.e 'calculators allowed'. </p>
+                    <p>Upload school logo, specify the total marks and any specific instructions for the paper i.e 'calculators allowed'. </p>
                     <p>Click on "Generate Paper" to create a customized exam paper based on your inputs. </p>
                 </p>
             </div>
@@ -69,17 +69,11 @@
                     If in word document, please make sure the questions are structured in a table format<br>
                     In both cases, ensure the column order is paper name, question text, question type i.e essay, and marks allocated to question.<br>
                     Incase of MCQs, please ensure there are separate columns for all options, marks column should be last<br>
+                    The columns should be named as paperName, questionBody, questionType, (MCQ add: questionOption1,..questionOption4), questionMarks<br>
                 </p>
                 <form class="form" method="post" action="/bankPaperGen" enctype="multipart/form-data">
                     <input type="file" accept=".xsl, .docx, .doc, .sxsl" required placeholder="submit questions" name="questionBank"/> <br>
-                    
-                    <select id="questionType" name="questionType">
-                        <option value="" disabled selected>Specify marks distribution</option>
-                        <option value="mcq">MCQ</option>
-                        <option value="short answer">Short Answer</option>
-                        <option value="long answer">Long Answer</option>
-                    </select> <br>
-                    <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
+                    <textarea id="numQuestions" rows="10" cols="50" placeholder="specify structure ie 8 MCQ, 6 SAQ, 4 LAQ" name="numQuestions"></textarea><br>
                     <button type="submit">Generate paper</button>
                 </form>
             </div>
@@ -99,10 +93,12 @@
                     <!-- mafunso abwere ngati list kupangidwa append ku javascript object makey question, marks, type -->
                     <textarea id="questionBody" rows="10" cols="50" placeholder="Enter your question here" name="questionBody"></textarea><br>
                     <input type="text" id="questionType" placeholder="question type e.g mcq, short answer, long answer" name="questionType"/><br>
-                    <input type="text" id="questionOption1" name="questionOption1" placeholder="MCQ option1" /><br>
-                    <input type="text" id="questionOption2" name="questionOption2" placeholder="MCQ option2" /><br>
-                    <input type="text" id="questionOption3" name="questionOption3" placeholder="MCQ option3" /><br>
-                    <input type="text" id="questionOption4" name="questionOption4" placeholder="MCQ option4" /><br>
+                    <div class="ops" style="display: grid; grid-template-columns: repeat(2,1fr); gap:5px;">
+                        <input type="text" id="questionOption1" name="questionOption1" placeholder="MCQ option1" />
+                        <input type="text" id="questionOption2" name="questionOption2" placeholder="MCQ option2" />
+                        <input type="text" id="questionOption3" name="questionOption3" placeholder="MCQ option3" />
+                        <input type="text" id="questionOption4" name="questionOption4" placeholder="MCQ option4" />
+                    </div>
                     <input type="number" id="questionMarks" placeholder="marks allocated to question" name="questionMarks"/><br>
                     <button name="questionDets" id="addQuestionButton"><b>+</b></button> 
                     <button type="submit" name="manualPaperGen">Generate paper</button>
