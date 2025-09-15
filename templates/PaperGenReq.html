@@ -50,7 +50,10 @@
                 </p>
             </div>
             <form class="form" method="POST" action="{{ url_for('addQuestion')}}">
-                <input type="file" accept=".png, .jpg, .jpeg" required name="logo" id="logo"/><br>
+                <div class="file">
+                    <input type="file" accept=".png, .jpg, .jpeg" required name="logo" id="logo"/>
+                    <label for="logo">Upload school logo</label>
+                </div>
                 <input name="schoolName" type="text" required placeholder="school name" /><br>
                 <input name="subjectName" type="text" required placeholder="subject" /><br>
                 <input name="paperName" type="text" required placeholder="name of paper" /> <br>
@@ -117,9 +120,7 @@
                 </p>
                 <form class="form">
                     <input type="file" required placeholder="submit document"/> <br>
-                    <input type="text" id="questionType" placeholder="question type e.g mcq, short answer, long answer"/><br>
-                    <input type="number" required placeholder="number of questions" id="numQuestions" /> <br>
-                    <button onclick="addSection()" id="addSectionButton"><b>+</b></button> 
+                    <textarea id="numQuestions" rows="10" cols="50" placeholder="specify structure ie 8 MCQ, 6 SAQ, 4 LAQ" name="numQuestions"></textarea><br>
                     <button onclick="docPaperGen()">Generate paper</button>
                 </form>
             </div>

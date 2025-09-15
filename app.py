@@ -115,8 +115,6 @@ def PaperGenReq():
 
 ################################################### GEN ONE
 
-# @app.route("/bankPaperGen", methods=['GET', 'POST'])
-# def bankPaperGen(): 
 @app.post('/bankPaperGen')
 def bankPaperGen():
     uploaded_file = request.files['file']
@@ -139,7 +137,6 @@ def bankPaperGen():
 
     conn.commit()
     cursor.close()
-    conn.close()
 
     return render_template("loading.html")
 
@@ -168,7 +165,7 @@ def addQuestion():
 
             conn.commit()
             cursor.close()
-        if 'paperDets' in request.form: #zokhudza pepala maliki 
+        elif 'paperDets' in request.form: #zokhudza pepala maliki 
             data1 = request.form
             sName = data1['schoolName']
             pName = data1['paperName']
@@ -177,7 +174,7 @@ def addQuestion():
             tMarks = data1['totalMarks']
             
 
-    return tMarks, render_template("PaperGenReq.html") #flash message render
+    return render_template("PaperGenReq.html") #flash message render
 
 @app.route("/manualPaperGen", methods=['POST'])
 def manualPaperGen():

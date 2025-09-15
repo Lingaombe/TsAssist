@@ -21,7 +21,7 @@ button{
     padding: 8px;
     border-radius: 10px;
     border: transparent;
-    font-family:'Times New Roman', Times, serif;
+    font-family:'Comic Sans Ms', cursive, sans-serif;
     font-size: 1.1rem;
 }
 button:hover{
@@ -41,12 +41,10 @@ a{
     color: #B0FF92;
 } */
 nav{
-    padding: 10px;
     display: flex;
     position: sticky;
     top: 0;
     backdrop-filter: blur(10px);
-    z-index: 1000;
     justify-content: space-between;
     align-items: center;
 }
